@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {windowHeight, windowWidth} from '../utils/Dimensions';
 
 export default function Order({ navigation, route }) {
-    const { user, logout } = useContext(AuthContext);
     const value = route.params.value;
 
     return (
@@ -41,7 +40,7 @@ export default function Order({ navigation, route }) {
                 <Text style={[styles.fontBold, styles.font20, {marginBottom: 20, marginTop: 30}]}>Livraison</Text>
                 <Text style={{marginTop: 10}}>Recherche d'un livreur en cours...</Text>
             </ScrollView>
-            <Text style={[styles.fontBold, {position: 'absolute', bottom: 40, right: 40, fontSize: 35}]}>Total: 329€</Text>
+            <Text style={[styles.fontBold, {position: 'absolute', bottom: 40, right: 40, fontSize: 35}]}>Total: {value.total}€</Text>
         </SafeAreaView>
     );
 }
