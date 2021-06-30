@@ -28,7 +28,7 @@ export default function HomeScreen({ navigation, route }) {
                     color: color,
                     price: price,
                     description: description,
-                    sizes: sizes.split(',')
+                    sizes: typeof sizes === 'string' ? sizes.split(',') : sizes
                 })
                 .then(() => {
                     console.log('Article edited!')

@@ -4,9 +4,23 @@ import FormButton from '../components/FormButton';
 import { AuthContext } from '../navigation/AuthProvider';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {windowHeight, windowWidth} from '../utils/Dimensions';
+import firestore from '@react-native-firebase/firestore';
 
 export default function Order({ navigation, route }) {
     const value = route.params.value;
+
+    const confirmOrder = () => {
+        firestore()
+            .collection('stores')
+            .doc(value.articles[0].store_doc)
+            .collection('orders')
+            .doc(value.doc)
+            .delete()
+            .then(() => {
+                navigation.goBack();
+                console.log('Order deleted!');
+            })
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -17,6 +31,9 @@ export default function Order({ navigation, route }) {
                 </TouchableOpacity>
             </View>
             <ScrollView showsVerticalScrollIndicator={false} contentInsetAdjustmentBehavior="automatic" style={{backgroundColor: 'white', padding: 20, width: windowWidth - 40, marginHorizontal: 20, marginTop: 30, borderRadius: 20}}>
+                <TouchableOpacity onPress={() => confirmOrder()} style={[styles.boxShadow, {backgroundColor: '#FF2D87', height: 70, paddingHorizontal: 20, borderRadius: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, right: 0}]}>
+                    <Text style={{color: 'white', fontFamily: 'Gotham-Bold'}}>Confirmer la commande</Text>
+                </TouchableOpacity>
                 <Text style={[styles.fontBold, styles.font20, {marginBottom: 20}]}>Client</Text>
                 <Text>{value.name} {value.firstname}</Text>
                 <Text style={{marginTop: 10}}>{value.email}</Text>
